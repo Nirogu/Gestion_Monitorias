@@ -49,13 +49,14 @@ def stringAHoras(s):
 def generarHorario(monitor, materia):
     '''Metodo para crear un nuevo horario basado en la posible interseccion de los horarios disponibles de un monitor y una materia.
     Si dicha interseccion no existe, el metodo retornara None. Se da por supuesto que las monitorias duraran 2 horas'''
+    duracionMonitoria = 120
     for mat_horario in materia.horarios:
         for mon_horario in monitor.horarios:
             if mat_horario.dia == mon_horario.dia:
                 if mat_horario.horaInicio < mon_horario.horaFinal and mon_horario.horaInicio < mat_horario.horaFinal:
                     horaInicioMonitoria = mat_horario.horaInicio if mon_horario.horaInicio < mat_horario.horaInicio else mon_horario.horaInicio
                     horaFinalMonitoria = mat_horario.horaFinal if mat_horario.horaFinal < mon_horario.horaFinal else mon_horario.horaFinal
-                    if 2 <= horaFinalMonitoria.hour - horaInicioMonitoria.hour:
+                    if duracionMonitoria <= 60*(horaFinalMonitoria.hour - horaInicioMonitoria.hour) + horaFinalMonitoria.minute - horaInicioMonitoria.minute:
                         return Horario(mat_horario.dia, horaInicioMonitoria, datetime.time(horaInicioMonitoria.hour+2, horaInicioMonitoria.minute))
     return None
 
